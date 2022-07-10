@@ -3,9 +3,10 @@ const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors');
 
-const CategorieModel = require('./models/Categorie');
+const CategorieModel = require('./model/Categorie');
+const ProduitModel = require('./model/Product');
 
-mongoose.connect('mongodb+srv://Johnson:NduIJZ0a9oeNRbQi@appstock.ltfbo.mongodb.net/appStock?retryWrites=true&w=majority', { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://Johnson:4otaeV4fItFK4yve@categories.xkjc8.mongodb.net/appStocks?retryWrites=true&w=majority', { useNewUrlParser: true });
 
 app.listen(3001, () => {
     console.log('Server is running on port 3001');
@@ -22,46 +23,11 @@ app.get('/categorie', async (req, res) => {
     })
 });
 
+//Insert Categories
+app.get('/categorie/insert', async (req, res) => {
+    const categorie = new CategorieModel({ nom: "Johnson" });
+    await categorie.save();
+    res.send('Categorie inserted');
+});
 
-//Add categorie
-// app.post('/categorie/add', async (req, res) => {
-//     // const name = req.body.name;
-//     // const age = req.body.age;
-
-
-//     const categorie = req.body;
-//     const newCategorie = new CategorieModel(categorie);
-//     await newCategorie.save();
-//     res.json(newCategorie);
-//     res.send("Ajout d'une nouvelle categorie");
-// });
-
-//Update categorie
-// app.put('/categorie/update', async (req, res) => {
-
-//     // const newAge = req.body.newAge;
-//     // const id = req.body.id;
-
-//     try {
-//         // await CategorieModel.findById(id, (error, friendToUpdate) => {
-//         //     friendToUpdate.age = Number(newAge);
-//         //     friendToUpdate.save();
-//         // })
-//     } catch (err) {
-//         console.log(err)
-//     }
-//     res.send("You are connected");
-
-// });
-
-//Delete categorie
-// app.delete('/categorie/delete/:id', async (req, res) => {
-//     const id = req.params.id;
-//     try {
-//         await CategorieModel.findByIdAndRemove(id).exec();
-//     } catch (err) {
-//         console.log(err)
-//     }
-//     res.send("Item is deleted");
-// });
 
