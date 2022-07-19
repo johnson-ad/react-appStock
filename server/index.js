@@ -3,10 +3,10 @@ const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors');
 
-const CategorieModel = require('./model/Categorie');
-const ProduitModel = require('./model/Product');
+const CategorieModel = require('./model/Categorie.js');
+const ProductModel = require('./model/Product.js');
 
-mongoose.connect('mongodb+srv://Johnson:4otaeV4fItFK4yve@categories.xkjc8.mongodb.net/appStocks?retryWrites=true&w=majority', { useNewUrlParser: true });
+mongoose.connect('mongodb://localhost:27017/appStocks?readPreference=primary&appname=MongoDB%20Compass&ssl=false', { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.listen(3001, () => {
     console.log('Server is running on port 3001');
@@ -20,14 +20,27 @@ app.get('/categorie', async (req, res) => {
         } else {
             res.json(result);
         }
-    })
+    }).populate({ path: 'produit', select: ['libelle', 'stock'] });
 });
 
-//Insert Categories
+
 app.get('/categorie/insert', async (req, res) => {
-    const categorie = new CategorieModel({ nom: "Johnson" });
+    const categorie = new CategorieModel({ nom: 'Categorie 2' });
     await categorie.save();
-    res.send('Categorie inserted');
+    res.send("categories inserted");
 });
+
+// Read Products
+app.get('/produit', async (req, res) => {
+    ProductModel.find({}, (err, result) => {
+        if (err) {
+            res.json(err);
+        } else {
+            res.json(result);
+        }
+    })
+    //.populate({ path: 'categori_id', select: ['nom'] });
+});
+
 
 

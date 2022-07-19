@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const ProductSchema = new mongoose.Schema({
+    // categori_id: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'categories'
+    // },
     libelle: {
         type: String,
         required: true
@@ -11,5 +15,5 @@ const ProductSchema = new mongoose.Schema({
     }
 });
 
-const ProductModel = mongoose.model('produit', ProductSchema);
+const ProductModel = mongoose.model('produits', ProductSchema);
 module.exports = ProductModel;
